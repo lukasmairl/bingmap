@@ -69,7 +69,7 @@ define(['jquery', "util/smartResize"], function($, smartresize) {
         function initMap() {
             bindEvents();
             create();
-            //getGeoLocation();
+            getGeoLocation();
             addPins(opts.pins);
             initInfoBox();
         }
@@ -125,7 +125,7 @@ define(['jquery', "util/smartResize"], function($, smartresize) {
 
         function reset() {
             removePins();
-            //getGeoLocation();
+            getGeoLocation();
         }
 
         /**
@@ -142,21 +142,12 @@ define(['jquery', "util/smartResize"], function($, smartresize) {
 
         function setDimensions(width, height) {
             if (width !== "") {
-                //console.log(width);
-                //$(el).width(1204);
-                // microsoftMap.css({
-                //     width: width
-                // });
-
                 map.setView({
                     width: width
                 });
             }
 
             if (height !== "") {
-                //$(el).width(height);
-                //microsoftMap.height(height);
-
                 map.setView({
                     height: height
                 });
@@ -167,7 +158,7 @@ define(['jquery', "util/smartResize"], function($, smartresize) {
          * Get Location
          */
 
-        /*function getGeoLocation() {
+        function getGeoLocation() {
             if (Modernizr.geolocation) {
                 var geoLocationProvider = new Microsoft.Maps.GeoLocationProvider(map);
                 geoLocationProvider.getCurrentPosition({
@@ -184,28 +175,20 @@ define(['jquery', "util/smartResize"], function($, smartresize) {
                 var loc = [position.latitude, position.longitude];
 
                 setZoom(15);
-                /*map.setView({
-                    zoom: 2,
-                    center: loc
-                });
-				
-
-               geoLocationProvider.addAccuracyCircle(loc, 1000, 1000, {
+                
+								geoLocationProvider.addAccuracyCircle(loc, 1000, 1000, {
                     polygonOptions: {
                         strokeThickness: 1,
                         fillColor: new Microsoft.Maps.Color(200, 255, 128, 0)
                     }
                 }); 
-	
-                //setCenter(loc);
-                //setZoom(opts.Zoom);
             }
 
             function onGeoLocationPositionError() {
                 console.log("error retrieving geo location");
             }
 
-        }*/
+        }
 
         /**
          * Set the Map Zoom level
