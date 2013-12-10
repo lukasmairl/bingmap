@@ -15,7 +15,9 @@ define(['jquery', "util/smartResize"], function($, smartresize) {
             center: [40.702880, -73.990655],
             showScalebar: false,
             disableBirdseye: true,
+            autoResize: false,
             showCopyright: false,
+            disableUserInput: false,
             showDashboard: true,
             showMapTypeSelector: false,
             theme: 'Microsoft.Maps.Themes.BingTheme',
@@ -46,8 +48,9 @@ define(['jquery', "util/smartResize"], function($, smartresize) {
             locations = [],
             microsoftMap,
             infobox,
-            self = this;
-        el = element;
+            self = this,
+            el = element,
+            elParent = $(el).parent();
 
         /**
          * Initialize Module, wait for Map Theme callback
@@ -66,7 +69,7 @@ define(['jquery', "util/smartResize"], function($, smartresize) {
         function initMap() {
             bindEvents();
             create();
-            getGeoLocation();
+            //getGeoLocation();
             addPins(opts.pins);
             initInfoBox();
         }
@@ -83,6 +86,7 @@ define(['jquery', "util/smartResize"], function($, smartresize) {
                 mapTypeId: opts.mapType,
                 zoom: opts.zoom,
                 width: opts.width,
+                disableUserInput: opts.disableUserInput,
                 height: opts.height,
                 showScalebar: opts.showScalebar,
                 disableBirdseye: opts.disableBirdseye,
@@ -98,6 +102,8 @@ define(['jquery', "util/smartResize"], function($, smartresize) {
                 microsoftMap = $(el).find(".MicrosoftMap");
             }
 
+            if (opts.autoResize) autoResize();
+
         }
 
         /**
@@ -107,6 +113,9 @@ define(['jquery', "util/smartResize"], function($, smartresize) {
         function bindEvents() {
             $win.smartresize(function() {
                 opts.onResize.call(self);
+
+                if (opts.autoResize) autoResize();
+
             });
         }
 
@@ -116,7 +125,15 @@ define(['jquery', "util/smartResize"], function($, smartresize) {
 
         function reset() {
             removePins();
-            getGeoLocation();
+            //getGeoLocation();
+        }
+
+        /**
+         * Auto Resize based on Parent Element
+         */
+
+        function autoResize() {
+            setDimensions(elParent.width(), elParent.height());
         }
 
         /**
@@ -125,15 +142,24 @@ define(['jquery', "util/smartResize"], function($, smartresize) {
 
         function setDimensions(width, height) {
             if (width !== "") {
-                $(el).width(width);
-                microsoftMap.css({
+                //console.log(width);
+                //$(el).width(1204);
+                // microsoftMap.css({
+                //     width: width
+                // });
+
+                map.setView({
                     width: width
                 });
             }
 
             if (height !== "") {
-                $(el).width(height);
-                microsoftMap.height(height);
+                //$(el).width(height);
+                //microsoftMap.height(height);
+
+                map.setView({
+                    height: height
+                });
             }
         }
 
@@ -141,7 +167,7 @@ define(['jquery', "util/smartResize"], function($, smartresize) {
          * Get Location
          */
 
-        function getGeoLocation() {
+        /*function getGeoLocation() {
             if (Modernizr.geolocation) {
                 var geoLocationProvider = new Microsoft.Maps.GeoLocationProvider(map);
                 geoLocationProvider.getCurrentPosition({
@@ -162,15 +188,15 @@ define(['jquery', "util/smartResize"], function($, smartresize) {
                     zoom: 2,
                     center: loc
                 });
-				*/
+				
 
-                geoLocationProvider.addAccuracyCircle(loc, 1000, 1000, {
+               geoLocationProvider.addAccuracyCircle(loc, 1000, 1000, {
                     polygonOptions: {
                         strokeThickness: 1,
                         fillColor: new Microsoft.Maps.Color(200, 255, 128, 0)
                     }
-                });
-
+                }); 
+	
                 //setCenter(loc);
                 //setZoom(opts.Zoom);
             }
@@ -179,7 +205,7 @@ define(['jquery', "util/smartResize"], function($, smartresize) {
                 console.log("error retrieving geo location");
             }
 
-        }
+        }*/
 
         /**
          * Set the Map Zoom level
@@ -354,3 +380,5 @@ define(['jquery', "util/smartResize"], function($, smartresize) {
 
     return Map;
 });
+Window size: x 
+Viewport size: x
