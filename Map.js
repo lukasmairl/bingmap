@@ -176,7 +176,7 @@ define(['jquery', "util/smartResize"], function($, smartresize) {
 
                 setZoom(15);
                 
-								geoLocationProvider.addAccuracyCircle(loc, 1000, 1000, {
+		geoLocationProvider.addAccuracyCircle(loc, 1000, 1000, {
                     polygonOptions: {
                         strokeThickness: 1,
                         fillColor: new Microsoft.Maps.Color(200, 255, 128, 0)
