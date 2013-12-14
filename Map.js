@@ -29,12 +29,12 @@ define(['jquery', "util/smartResize"], function($, smartresize) {
                 height: 48
             },
             pinIconHover: {
-                icon: "/assets/img/dealer-locator/icon-marker-gold-hightlighted.png",
+                icon: "/icon-marker-hightlighted.png",
                 width: 33,
                 height: 48
             },
             pinIconCurrentLocation: {
-                icon: "/assets/img/dealer-locator/icon-marker-current-location.png",
+                icon: "//icon-marker-current-location.png",
                 width: 103,
                 height: 103
             },
